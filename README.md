@@ -6,7 +6,7 @@ Find written books and writable books inside Minecraft region files. This tool s
 
 - Fast multithreaded scanning of region files
 - Searches for both `minecraft:written_book` and `minecraft:writable_book`
-- Provides coordinates of found books
+- Provides exact coordinates when available, or chunk coordinates
 - Works with vanilla and modded Minecraft worlds
 - Detailed output written to `out.txt`
 
@@ -41,8 +41,8 @@ The tool provides two types of output:
 
 Example output format in `out.txt`:
 ```
-Found minecraft:written_book: Compound({"tag": Compound({"pages": List([String("\"i am a book\"")]), "filtered_title": String("test"), "title": String("test"), "author": String("lululombard")}), "id": String("minecraft:written_book"), "Slot": Byte(0), "Count": Byte(1)})
-Found minecraft:writable_book: Compound({"tag": Compound({"pages": List([String("hello")])}), "Slot": Byte(0), "id": String("minecraft:writable_book"), "Count": Byte(1)})
+Found minecraft:written_book in chunk at x 0, z 16: Compound({"tag": Compound({"pages": List([String("\"Hello\"")]), "filtered_title": String("Test"), "title": String("Test"), "author": String("lululombard")}), "id": String("minecraft:written_book"), "Slot": Byte(0), "Count": Byte(1)})
+Found minecraft:writable_book in chunk at x 0, z 0: Compound({"tag": Compound({"pages": List([String("Hi I am a book")])}), "Slot": Byte(0), "id": String("minecraft:writable_book"), "Count": Byte(1)})
 ```
 
-This shows the book's content, title, author (for written books), and other NBT data associated with the item.
+The tool will show exact coordinates (x, y, z) when available. When exact coordinates can't be determined, it will show the chunk coordinates (x, z) where the item was found. Each output includes the book's content, title, author (for written books), and other NBT data.

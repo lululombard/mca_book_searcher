@@ -45,7 +45,7 @@ fn main() {
                     let mut data: Vec<u8> = Vec::new();
                     file.read_to_end(&mut data).unwrap();
                     let mut region = RegionBuffer::new(Cursor::new(data));
-                    region.for_each_chunk(|x,y,data|{
+                    region.for_each_chunk(|chunk_x, chunk_z, data|{
                         let chunk: Value = from_bytes(data.as_slice()).unwrap();
                         let file_out = file_out.clone();
                         let names = names.clone();
@@ -57,8 +57,11 @@ fn main() {
                                         writeln!(&mut lock, "Found {} at x {}, y {}, z {}: {:?}", name, x, y, z, v).unwrap();
                                         println!("Found {} at x {}, y {}, z {}", name, x, y, z);
                                     } else {
-                                        writeln!(&mut lock, "Found {}: {:?}", name, v).unwrap();
-                                        println!("Found {}", name);
+                                        // Calculate absolute block coordinates from chunk coordinates
+                                        let abs_x = chunk_x * 16;
+                                        let abs_z = chunk_z * 16;
+                                        writeln!(&mut lock, "Found {} in chunk at x {}, z {}: {:?}", name, abs_x, abs_z, v).unwrap();
+                                        println!("Found {} in chunk at x {}, z {}", name, abs_x, abs_z);
                                     }
                                 }
                             }
